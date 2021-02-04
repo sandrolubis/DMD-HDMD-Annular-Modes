@@ -1,5 +1,5 @@
 # DMD_HDMD_Annular_Modes
-This repository contains scripts/codes to calculate DMD and HDMD of the Annular Modes based on Matlab
+This repository contains scripts/codes to calculate DMD and HDMD of the Annular Modes based on Matlab and NCL
 
 1. dmd_u_erainterim.m includes the codes to calculate dynamic mode decomposition of the zonal mean zonal wind anomalies (p, lat) from ERA-Interim.
 
