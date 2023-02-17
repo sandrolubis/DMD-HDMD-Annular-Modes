@@ -25,10 +25,10 @@ for ens=1:NumEns
     
     uN=zeros(48,39,floor(nd/M),'single');  
     uS=uN;    
-    TS=uN;    %% Northern hemisphere zonal wind
+    TS=uN;    %%Northern hemisphere zonal wind
     TN=uN;
     for n=M:M:nd
-        uN(:,:,n/M)= u4xDaily(49:end,:,n);    % Northern hemisphere zonal wind
+        uN(:,:,n/M)= u4xDaily(49:end,:,n);   % Northern hemisphere zonal wind
         TN(:,:,n/M)= T4xDaily(49:end,:,n);    % Northern hemisphere temperature
         uS(:,:,n/M)= u4xDaily(48:-1:1,:,n);   % Southern hemisphere zonal wind
         TS(:,:,n/M)= T4xDaily(48:-1:1,:,n);   % Southern hemisphere temperature
