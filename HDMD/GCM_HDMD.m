@@ -4,7 +4,7 @@ close all
 
 M = 4;           % sampling freq 1:6h; 4:24h
 P = 2;           % \tau of DMD or HDMD (day)
-q = 5;           % delay
+d = 5;           % delay embedded
 r = 500;         % DMD truncation value 
 
 NumEns = 14;     % # of datasets used for developing ROM
@@ -19,8 +19,8 @@ for ens=1:NumEns
     
     N = floor(nd/M);
     if(ens==1)
-        XX=zeros(2*np*q,(N-q+1-P)*NumEns*2,'single');
-        YY=zeros(2*np*q,(N-q+1-P)*NumEns*2,'single');
+        XX=zeros(2*np*d,(N-d+1-P)*NumEns*2,'single');
+        YY=zeros(2*np*d,(N-d+1-P)*NumEns*2,'single');
     end        
     
     uN=zeros(48,39,floor(nd/M),'single');  
@@ -84,10 +84,10 @@ for ens=1:NumEns
     end
     clear uNa uSa TNa TSa
     
-    HNa=zeros(2*np*q,N-q+1,'single');
+    HNa=zeros(2*np*d,N-d+1,'single');
     HSa=HNa;
-    for j=1:N-q+1
-        for i=1:q    %% Arranging data into Hankel matrices
+    for j=1:N-d+1
+        for i=1:d    %% Arranging data into Hankel matrices
             HNa((i-1)*2*np+1:i*2*np,j)=XNa(:,i+(j-1));
             HSa((i-1)*2*np+1:i*2*np,j)=XSa(:,i+(j-1));
         end
@@ -102,8 +102,8 @@ for ens=1:NumEns
     XSp=HSa(:,1+P:end);
     clear HSa HNa
     
-    XX(:,(ens-1)*2*(N-q+1-P)+1:(ens)*2*(N-q+1-P)) = [XN0 XS0];
-    YY(:,(ens-1)*2*(N-q+1-P)+1:(ens)*2*(N-q+1-P)) = [XNp XSp];
+    XX(:,(ens-1)*2*(N-d+1-P)+1:(ens)*2*(N-d+1-P)) = [XN0 XS0];
+    YY(:,(ens-1)*2*(N-d+1-P)+1:(ens)*2*(N-d+1-P)) = [XNp XSp];
 
     clear XN0 XS0 XNp XSp
     toc
@@ -130,14 +130,14 @@ end
 [EVal, I] = sort(abs(diag(EVal)), 'descend');
 phi = phi(:, I);           % sorting Hankel-DMD modes
 
-phi_n = zeros(size(phi, 1)/q, size(phi, 2));
+phi_n = zeros(size(phi, 1)/d, size(phi, 2));
 for(i = 1:size(phi, 2))  % Hankel-DMD modes in physical space (= their last block in delay coordinates)
-    phi_n(:, i) = phi(end-size(phi, 1)/q+1:end, i);   
+    phi_n(:, i) = phi(end-size(phi, 1)/d+1:end, i);   
 end
 phi = phi_n;           
 
 toc
 
 disp('Saving ...')
-save(['GCM_Modes_3M/Modes_Lagday' num2str(P) '_q' num2str(q) '_r' num2str(r) '.mat'], ... 
-    'AHDMD', 'r', 'q', 'M', 'y', 'pf', 'U', 'S', 'phi', 'sdU', 'sdT', '-v7.3')
+save(['GCM_Modes_3M/Modes_Lagday' num2str(P) '_d' num2str(d) '_r' num2str(r) '.mat'], ... 
+    'AHDMD', 'r', 'd', 'M', 'y', 'pf', 'U', 'S', 'phi', 'sdU', 'sdT', '-v7.3')
