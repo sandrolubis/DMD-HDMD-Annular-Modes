@@ -54,9 +54,9 @@ for ens=1:NumEns
     sdTN=sduN;
     for j=1:48
         for k=1:39
-            sduN(j,k)= std(squeeze(uNa(j,k,:)));     
-            sdTN(j,k)= std(squeeze(TNa(j,k,:)));   % calculating zonal-wind and temperature
-            sduS(j,k)= std(squeeze(uSa(j,k,:)));   % standard deviations at different grid points
+            sduN(j,k)= std(squeeze(uNa(j,k,:))); 
+            sdTN(j,k)= std(squeeze(TNa(j,k,:)));   % calculating zonal-wind and temperature 
+            sduS(j,k)= std(squeeze(uSa(j,k,:)));   % standard deviations at different grid points 
             sdTS(j,k)= std(squeeze(TSa(j,k,:)));   
         end
     end
@@ -68,10 +68,10 @@ for ens=1:NumEns
     end
     for n=1:days 
         for j=1:48        %% normalization of u and T     
-            uNa(j,:,n)=squeeze(uNa(j,:,n))*sqrt(cos(y(48+j)*pi/180.0))./squeeze(sdU(:,ens))';
-            uSa(j,:,n)=squeeze(uSa(j,:,n))*sqrt(cos(y(48+j)*pi/180.0))./squeeze(sdU(:,ens))';
-            TNa(j,:,n)=squeeze(TNa(j,:,n))*sqrt(cos(y(48+j)*pi/180.0))./squeeze(sdT(:,ens))';
-            TSa(j,:,n)=squeeze(TSa(j,:,n))*sqrt(cos(y(48+j)*pi/180.0))./squeeze(sdT(:,ens))';
+            uNa(j,:,n)=squeeze(uNa(j,:,n))*sqrt(cos(y(48+j)*pi/180.0))./squeeze(sdU(:,ens))'; 
+            uSa(j,:,n)=squeeze(uSa(j,:,n))*sqrt(cos(y(48+j)*pi/180.0))./squeeze(sdU(:,ens))'; 
+            TNa(j,:,n)=squeeze(TNa(j,:,n))*sqrt(cos(y(48+j)*pi/180.0))./squeeze(sdT(:,ens))'; 
+            TSa(j,:,n)=squeeze(TSa(j,:,n))*sqrt(cos(y(48+j)*pi/180.0))./squeeze(sdT(:,ens))'; 
         end
     end
     
