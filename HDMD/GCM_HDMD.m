@@ -2,12 +2,12 @@ clc
 clear all
 close all
 
-M = 4;           %% sampling freq 1:6h; 4:24h
-P = 2;           %% \tau of DMD or HDMD (day)
-q = 5;           %% delay
-r = 500;         %% DMD truncation value 
+M = 4;           % sampling freq 1:6h; 4:24h
+P = 2;           % \tau of DMD or HDMD (day)
+q = 5;           % delay
+r = 500;         % DMD truncation value 
 
-NumEns = 14;     %% # of datasets used for developing ROM
+NumEns = 14;     % # of datasets used for developing ROM
 
 for ens=1:NumEns
     tic
