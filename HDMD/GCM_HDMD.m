@@ -1,3 +1,5 @@
+%% Calculating the basis functions (EOFs or DMD modes or Hankel-DMD modes depending on the entries)
+
 clc
 clear all
 close all
