@@ -25,13 +25,13 @@ for ens=1:NumEns
     
     uN=zeros(48,39,floor(nd/M),'single');  
     uS=uN;    
-    TS=uN;    %%Northern hemisphere zonal wind
+    TS=uN;    %Northern hemisphere zonal wind
     TN=uN;
     for n=M:M:nd
         uN(:,:,n/M)= u4xDaily(49:end,:,n);   % Northern hemisphere zonal wind
-        TN(:,:,n/M)= T4xDaily(49:end,:,n);    % Northern hemisphere temperature
-        uS(:,:,n/M)= u4xDaily(48:-1:1,:,n);   % Southern hemisphere zonal wind
-        TS(:,:,n/M)= T4xDaily(48:-1:1,:,n);   % Southern hemisphere temperature
+        TN(:,:,n/M)= T4xDaily(49:end,:,n);   % Northern hemisphere temperature
+        uS(:,:,n/M)= u4xDaily(48:-1:1,:,n);  % Southern hemisphere zonal wind
+        TS(:,:,n/M)= T4xDaily(48:-1:1,:,n);  % Southern hemisphere temperature
     end
     clear u4xDaily T4xDaily
     days=size(uN,3);
@@ -62,12 +62,12 @@ for ens=1:NumEns
     end
         
     disp('Weighting ...')
-    for k=1:39    %% calculating area-averaged standard deviation at different pressure levels
+    for k=1:39     %% calculating area-averaged standard deviation at different pressure levels
         sdU(k,ens)=mean(0.5*squeeze(sduN(:,k)+sduS(:,k)).*cos(y(49:end)*pi/180.0)/cos(45.0*pi/180.0));
         sdT(k,ens)=mean(0.5*squeeze(sdTN(:,k)+sdTS(:,k)).*cos(y(49:end)*pi/180.0)/cos(45.0*pi/180.0));
     end
     for n=1:days 
-        for j=1:48       %% normalization of u and T     
+        for j=1:48        %% normalization of u and T     
             uNa(j,:,n)=squeeze(uNa(j,:,n))*sqrt(cos(y(48+j)*pi/180.0))./squeeze(sdU(:,ens))';
             uSa(j,:,n)=squeeze(uSa(j,:,n))*sqrt(cos(y(48+j)*pi/180.0))./squeeze(sdU(:,ens))';
             TNa(j,:,n)=squeeze(TNa(j,:,n))*sqrt(cos(y(48+j)*pi/180.0))./squeeze(sdT(:,ens))';
@@ -78,7 +78,7 @@ for ens=1:NumEns
     disp('Vectorizing ...')
     XNa=zeros(2*np,days);
     XSa=XNa;
-    for n=1:days    %% Building state vectors 
+    for n=1:days     %% Building state vectors 
         XNa(:,n)=[(reshape(uNa(:,:,n),np,1));(reshape(TNa(:,:,n),np,1))];
         XSa(:,n)=[(reshape(uSa(:,:,n),np,1));(reshape(TSa(:,:,n),np,1))];
     end
@@ -119,16 +119,16 @@ clear XX
 U = U(:, 1:r);
 S = S(1:r, 1:r);
 V = V(:, 1:r);
-AHDMD = U'*YY*V/S;     % Hankel-DMD execuation
+AHDMD = U'*YY*V/S;      % Hankel-DMD execuation
 [EVec,EVal] = eig(AHDMD);
 disp('EIG done')
 G = YY*V/S;
 clear YY V
 for n=1:size(EVal,1)
-    phi(:,n)=G*EVec(:,n)/EVal(n,n);   % Hankel-DMD modes in delay coordinates
+    phi(:,n)=G*EVec(:,n)/EVal(n,n);    % Hankel-DMD modes in delay coordinates
 end   
 [EVal, I] = sort(abs(diag(EVal)), 'descend');
-phi = phi(:, I);          % sorting Hankel-DMD modes
+phi = phi(:, I);           % sorting Hankel-DMD modes
 
 phi_n = zeros(size(phi, 1)/q, size(phi, 2));
 for(i = 1:size(phi, 2))  % Hankel-DMD modes in physical space (= their last block in delay coordinates)
