@@ -28,7 +28,7 @@ clear wgt;
 
 n = size(X, 1);
 m = size(X, 2);
-d = 2; %input variable
+d = 2; %embedded delay
 
 H = zeros(n * d, m - d + 1);
 
@@ -38,7 +38,7 @@ end
 
 clear X;
 
-P = 11; %input variable
+P = 11; %\tau of DMD or HDMD (day)
 
 X = H(:, 1:end - P);
 Y = H(:, 1 + P:end);
