@@ -28,10 +28,10 @@ for ens=1:NumEns
     TS=uN;    %% Northern hemisphere zonal wind
     TN=uN;
     for n=M:M:nd
-        uN(:,:,n/M)= u4xDaily(49:end,:,n);    %% Northern hemisphere zonal wind
-        TN(:,:,n/M)= T4xDaily(49:end,:,n);    %% Northern hemisphere temperature
-        uS(:,:,n/M)= u4xDaily(48:-1:1,:,n);   %% Southern hemisphere zonal wind
-        TS(:,:,n/M)= T4xDaily(48:-1:1,:,n);   %% Southern hemisphere temperature
+        uN(:,:,n/M)= u4xDaily(49:end,:,n);    % Northern hemisphere zonal wind
+        TN(:,:,n/M)= T4xDaily(49:end,:,n);    % Northern hemisphere temperature
+        uS(:,:,n/M)= u4xDaily(48:-1:1,:,n);   % Southern hemisphere zonal wind
+        TS(:,:,n/M)= T4xDaily(48:-1:1,:,n);   % Southern hemisphere temperature
     end
     clear u4xDaily T4xDaily
     days=size(uN,3);
@@ -55,8 +55,8 @@ for ens=1:NumEns
     for j=1:48
         for k=1:39
             sduN(j,k)= std(squeeze(uNa(j,k,:)));     
-            sdTN(j,k)= std(squeeze(TNa(j,k,:)));   %% calculating zonal-wind and temperature
-            sduS(j,k)= std(squeeze(uSa(j,k,:)));   %% standard deviations at different grid points
+            sdTN(j,k)= std(squeeze(TNa(j,k,:)));   % calculating zonal-wind and temperature
+            sduS(j,k)= std(squeeze(uSa(j,k,:)));   % standard deviations at different grid points
             sdTS(j,k)= std(squeeze(TSa(j,k,:)));   
         end
     end
@@ -119,19 +119,19 @@ clear XX
 U = U(:, 1:r);
 S = S(1:r, 1:r);
 V = V(:, 1:r);
-AHDMD = U'*YY*V/S;     %% Hankel-DMD execuation
+AHDMD = U'*YY*V/S;     % Hankel-DMD execuation
 [EVec,EVal] = eig(AHDMD);
 disp('EIG done')
 G = YY*V/S;
 clear YY V
 for n=1:size(EVal,1)
-    phi(:,n)=G*EVec(:,n)/EVal(n,n);   %% Hankel-DMD modes in delay coordinates
+    phi(:,n)=G*EVec(:,n)/EVal(n,n);   % Hankel-DMD modes in delay coordinates
 end   
 [EVal, I] = sort(abs(diag(EVal)), 'descend');
-phi = phi(:, I);          %% sorting Hankel-DMD modes
+phi = phi(:, I);          % sorting Hankel-DMD modes
 
 phi_n = zeros(size(phi, 1)/q, size(phi, 2));
-for(i = 1:size(phi, 2))  %% Hankel-DMD modes in physical space (= their last block in delay coordinates)
+for(i = 1:size(phi, 2))  % Hankel-DMD modes in physical space (= their last block in delay coordinates)
     phi_n(:, i) = phi(end-size(phi, 1)/q+1:end, i);   
 end
 phi = phi_n;           
