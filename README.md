@@ -24,3 +24,5 @@ This repository contains scripts/codes to calculate Dynamic mode decomposition (
 7. corr_hdmd_u_erainterim.ncl includes the codes to find pairs of HDMD modes that are highly correlated with the EOF modes.
 
 8. hdmd_u_erainterim_plot.ncl includes the codes to plot the best pairs of HDMD modes.
+
+9. GCM_HDMD.m is alculating the basis functions (EOFs or DMD modes or Hankel-DMD modes depending on the entries)
